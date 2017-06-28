@@ -7,6 +7,16 @@
     "type": "git",
     "url": "https://github.com/hugmanrique/feather-webpack-plugin.git"
   },
+  "engines": {
+    "node": ">=4.3.0 < 5.0.0 || >= 5.10"
+  },
+  "author": {
+    "name": "Hugo Manrique",
+    "url": "https://hugmanrique.me",
+    "email": "npm@hugmanrique.me"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/hugmanrique/feather-webpack-plugin",
   "keywords": [
     "webpack",
     "plugin",
@@ -16,13 +26,6 @@
     "symbols",
     "template"
   ],
-  "author": {
-    "name": "Hugo Manrique",
-    "url": "https://hugmanrique.me",
-    "email": "npm@hugmanrique.me"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/hugmanrique/feather-webpack-plugin",
   "scripts": {
     "test": "mocha tests/"
   },
