@@ -42,7 +42,7 @@ export default class FeatherPlugin {
 
     compiler.plugin('emit', (compilation, callback) => {
       if (!this.first) {
-        return;
+        return callback();
       }
 
       const icons = getIcons(whitelist);
