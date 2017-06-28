@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const svgstore = require('svgstore');
-const iconDir = path.join(__dirname, 'node_modules/feather-icons/icons');
+const iconDir = path.join(__dirname, '../feather-icons/icons');
 
 function FeatherPlugin(options) {
   if (!options) {
@@ -40,7 +40,7 @@ FeatherPlugin.prototype.apply = function(compiler) {
   const outputPath = path.resolve(context, this.output);
   const line = this.lineNumber;
 
-  compiler.plugin('webpacksEventHook', function(compilation, callback) {
+  compiler.plugin('emit', function(compilation, callback) {
     try {
       const icons = getIcons(whitelist);
 
