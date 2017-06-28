@@ -20,7 +20,7 @@ $ npm install --save feather-webpack-plugin
 webpack.config.js
 
 ```javascript
-const FeatherPlugin = require('feather-webpack-plugin');
+const FeatherPlugin = require('feather-webpack-plugin').default;
 
 module.exports = {
   plugins: {
