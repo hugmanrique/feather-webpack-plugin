@@ -18,6 +18,7 @@ MockCompiler.prototype.plugin = function(type, fn) {
   this.fn = fn;
 }
 
+const compiler = new MockCompiler();
 let instance;
 
 describe('create instance', function() {
@@ -40,22 +41,28 @@ describe('create instance', function() {
 
     done();
   });
+
+  it('apply function works', function() {
+    instance.apply(compiler);
+  });
 });
 
-describe('apply function', function() {
+describe('plugin call', function() {
   const outputPath = path.resolve(HELPER_DIR, 'output.ejs');
 
   it('generates file', function(done) {
-    const compiler = new MockCompiler();
-
-    instance.apply(compiler);
-
-    fs.exists(outputPath, function(exists) {
-      if (exists) {
-        done();
-      } else {
-        done(new Error('Output file doesn\'t exist'));
+    compiler.fn(null, function(err) {
+      if (err) {
+        return done(err);
       }
+
+      fs.exists(outputPath, function(exists) {
+        if (exists) {
+          done();
+        } else {
+          done(new Error('Output file doesn\'t exist'));
+        }
+      });
     });
   });
 
@@ -65,13 +72,25 @@ describe('apply function', function() {
         return done(err);
       }
 
-      console.log(data);
+      const output = data.toString('utf8');
 
-      if (data === '<a>Before</a>\n<b>After</b>') {
-        done();
-      } else {
-        done(new Error('Contents don\'t match'));
-      }
+      getExpectedOutput(function(expected) {
+        if (output === expected) {
+          done();
+        } else {
+          done(new Error('Contents don\'t match'));
+        }
+      });
     });
   });
 });
+
+function getExpectedOutput(callback) {
+  fs.readFile(path.resolve(HELPER_DIR, 'expected.ejs'), function(err, buffer) {
+    if (err) {
+      throw err;
+    }
+
+    callback(buffer.toString('utf8'));
+  });
+}

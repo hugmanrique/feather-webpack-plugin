@@ -44,22 +44,22 @@ FeatherPlugin.prototype.apply = function(compiler) {
       const icons = getIcons(whitelist);
 
       icons.forEach(function(icon) {
-        generator.add(icon);
+        generator.add(icon[0], icon[1]);
       });
 
-      saveTemplate(templatePath, line, generator, outputPath);
+      saveTemplate(templatePath, line, generator, outputPath, callback);
     } catch (err) {
       callback(err);
     }
   });
 }
 
-function saveTemplate(template, line, generator, outputPath) {
+function saveTemplate(template, line, generator, outputPath, callback) {
   const contents = fs.readFileSync(template).toString().split('\n');
 
   contents.splice(line, 0, generator);
 
-  fs.writeFileSync(outputPath, contents.join('\n'));
+  fs.writeFile(outputPath, contents.join('\n'), callback);
 }
 
 function getIcons(whitelist, callback) {
