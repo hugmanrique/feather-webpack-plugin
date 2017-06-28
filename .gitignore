@@ -3,5 +3,4 @@
 /dist
 /compiled_tests
 *.log
-
 .DS_Store
