@@ -1,30 +1,27 @@
-'use strict';
+import path from 'path';
+import fs from 'fs';
 
-const path = require('path');
-const fs = require('fs');
-const FeatherPlugin = require('../index.js');
+import FeatherPlugin from '../';
 
 const HELPER_DIR = path.join(__dirname, 'helpers');
-const BUILD_DIR = path.join(__dirname, 'build');
 
-function MockCompiler(options) {
-  this.options = {
-    context: HELPER_DIR,
-    output: {
-      path: BUILD_DIR
-    }
-  };
-}
+class MockCompiler {
+  constructor() {
+    this.options = {
+      context: HELPER_DIR
+    };
+  }
 
-MockCompiler.prototype.plugin = function(type, fn) {
-  this.fn = fn;
+  plugin(type, fn) {
+    this.fn = fn;
+  }
 }
 
 const compiler = new MockCompiler();
 let instance;
 
-describe('create instance', function() {
-  it('throws an error if no options are passed', function(done) {
+describe('plugin initialization', () => {
+  it('throws an error if no options are passed', done => {
     try {
       new FeatherPlugin();
       done('No exception was thrown');
@@ -33,66 +30,60 @@ describe('create instance', function() {
     }
   });
 
-  it('creates the instance', function(done) {
+  it('creates the instance', () => {
     instance = new FeatherPlugin({
       template: 'template.ejs',
       output: 'output.ejs',
       line: 1,
       whitelist: ['home']
     });
-
-    done();
   });
 
-  it('apply function works', function() {
+  it('apply function works', () => {
     instance.apply(compiler);
   });
 });
 
-describe('plugin call', function() {
+describe('template generation', () => {
   const outputPath = path.resolve(HELPER_DIR, 'output.ejs');
 
-  it('generates file', function(done) {
-    compiler.fn(null, function(err) {
+  it('generates file', done => {
+    compiler.fn(null, err => {
       if (err) {
         return done(err);
       }
 
-      fs.exists(outputPath, function(exists) {
+      fs.exists(outputPath, exists => {
         if (exists) {
           done();
         } else {
-          done(new Error('Output file doesn\'t exist'));
+          done(new Error(`Output file ${outputPath} doesn't exist`));
         }
       });
     });
   });
 
-  it('creates valid content', function(done) {
-    fs.readFile(outputPath, function(err, data) {
+  it('creates valid content', done => {
+    fs.readFile(outputPath, 'utf8', (err, output) => {
       if (err) {
         return done(err);
       }
 
-      const output = data.toString('utf8');
-
-      getExpectedOutput(function(expected) {
-        if (output === expected) {
-          done();
-        } else {
-          done(new Error('Contents don\'t match'));
-        }
-      });
+      checkOutput(output, done);
     });
-  });
-});
+  })
+})
 
-function getExpectedOutput(callback) {
-  fs.readFile(path.resolve(HELPER_DIR, 'expected.ejs'), function(err, buffer) {
+function checkOutput(output, done) {
+  fs.readFile(path.resolve(HELPER_DIR, 'expected.ejs'), 'utf8', (err, expected) => {
     if (err) {
-      throw err;
+      return done(err);
     }
 
-    callback(buffer.toString('utf8'));
-  });
+    if (output === expected) {
+      done();
+    } else {
+      done(new Error('Contents don\'t match'));
+    }
+  })
 }

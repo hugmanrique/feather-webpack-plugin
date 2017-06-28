@@ -1,5 +1,7 @@
 /node_modules
 /coverage
+/dist
+/compiled_tests
 *.log
 
 .DS_Store

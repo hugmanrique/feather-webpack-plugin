@@ -6,6 +6,8 @@ const fs = require('fs');
 const svgstore = require('svgstore');
 const iconDir = path.join(__dirname, '../feather-icons/icons');
 
+let first = true;
+
 function FeatherPlugin(options) {
   if (!options) {
     throw new Error('Some options are required');
@@ -37,10 +39,14 @@ FeatherPlugin.prototype.apply = function(compiler) {
   const context = compiler.options.context;
 
   const templatePath = path.resolve(context, this.templateName);
-  const output = this.output;
+  const outputPath = path.resolve(context, this.output);
   const line = this.lineNumber;
 
   compiler.plugin('emit', function(compilation, callback) {
+    if (!first) {
+      return;
+    }
+
     try {
       const icons = getIcons(whitelist);
 
@@ -48,17 +54,9 @@ FeatherPlugin.prototype.apply = function(compiler) {
         generator.add(icon[0], icon[1]);
       });
 
-      const template = getTemplate(templatePath, line, generator);
-
-      compilation.assets[output] = {
-        source: function() {
-          return template;
-        },
-        size: function() {
-          return template.length;
-        }
-      };
-
+      saveTemplate(templatePath, line, generator, outputPath);
+      first = false;
+      
       callback();
     } catch (err) {
       callback(err);
@@ -66,12 +64,12 @@ FeatherPlugin.prototype.apply = function(compiler) {
   });
 }
 
-function getTemplate(template, line, generator) {
+function saveTemplate(template, line, generator, outputPath) {
   const contents = fs.readFileSync(template).toString().split('\n');
 
   contents.splice(line, 0, generator);
 
-  return contents.join('\n');
+  fs.writeFileSync(outputPath, contents.join('\n'));
 }
 
 function getIcons(whitelist, callback) {
