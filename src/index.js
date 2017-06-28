@@ -5,7 +5,7 @@ import svgstore from 'svgstore';
 
 const iconDir = getIconDir();
 
-export default class FeatherPlugin {
+class FeatherPlugin {
   constructor(options) {
     if (!options instanceof Array) {
       throw new Error('An options array is required');
@@ -105,3 +105,7 @@ function getIconDir() {
 }
 
 const transform = (svg) => svg.replace(/ stroke="#000"/g, '');
+
+// Fix ES5 require
+FeatherPlugin.default = FeatherPlugin;
+module.exports = FeatherPlugin;
