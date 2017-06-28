@@ -29,6 +29,7 @@
   "scripts": {
     "pretest": "npm run build && npm run build:tests",
     "test": "mocha compiled_tests/",
+    "prepublish": "npm run build",
     "build": "babel src/ --out-dir dist/",
     "build:tests": "babel tests/ --out-dir compiled_tests/ && ncp tests/helpers compiled_tests/helpers"
   },
