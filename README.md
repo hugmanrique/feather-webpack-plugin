@@ -1,4 +1,10 @@
 # Feather Webpack Plugin
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+[![deps][deps]][deps-url]
+[![tests][tests]][tests-url]
+[![coverage][cover]][cover-url]
+
 Combine Feather icons into one using `<symbol>` elements which you may [`<use>` in your markup](https://css-tricks.com/svg-sprites-use-better-icon-fonts/).
 
 Uses [svgstore](https://www.npmjs.com/package/svgstore) on the back to create the `<symbol>` element.
