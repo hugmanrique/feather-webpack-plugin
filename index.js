@@ -40,7 +40,7 @@ FeatherPlugin.prototype.apply = function(compiler) {
   const outputPath = path.resolve(context, this.output);
   const line = this.lineNumber;
 
-  compiler.plugin('before-run', function(compilation, callback) {
+  compiler.plugin('compile', function(compilation, callback) {
     try {
       const icons = getIcons(whitelist);
 
