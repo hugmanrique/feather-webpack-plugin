@@ -1,8 +1,9 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs');
 
 const svgstore = require('svgstore');
-
 const iconDir = path.join(__dirname, 'node_modules/feather-icons/icons');
 
 function FeatherPlugin(options) {
