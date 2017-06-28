@@ -5,7 +5,7 @@
 [![tests][tests]][tests-url]
 [![coverage][cover]][cover-url]
 
-Combine Feather icons into one using `<symbol>` elements which you may [`<use>` in your markup](https://css-tricks.com/svg-sprites-use-better-icon-fonts/).
+Combine [Feather icons](https://feathericons.com/) into one using `<symbol>` elements which you may [`<use>` in your markup](https://css-tricks.com/svg-sprites-use-better-icon-fonts/) and write the output to a file.
 
 Uses [svgstore](https://www.npmjs.com/package/svgstore) on the back to create the `<symbol>` element.
 
