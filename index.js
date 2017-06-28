@@ -37,7 +37,7 @@ FeatherPlugin.prototype.apply = function(compiler) {
   const context = compiler.options.context;
 
   const templatePath = path.resolve(context, this.templateName);
-  const outputPath = path.resolve(context, this.output);
+  const output = this.output;
   const line = this.lineNumber;
 
   compiler.plugin('emit', function(compilation, callback) {
@@ -48,19 +48,30 @@ FeatherPlugin.prototype.apply = function(compiler) {
         generator.add(icon[0], icon[1]);
       });
 
-      saveTemplate(templatePath, line, generator, outputPath, callback);
+      const template = getTemplate(templatePath, line, generator);
+
+      compilation.assets[output] = {
+        source: function() {
+          return template;
+        },
+        size: function() {
+          return template.length;
+        }
+      };
+
+      callback();
     } catch (err) {
       callback(err);
     }
   });
 }
 
-function saveTemplate(template, line, generator, outputPath, callback) {
+function getTemplate(template, line, generator) {
   const contents = fs.readFileSync(template).toString().split('\n');
 
   contents.splice(line, 0, generator);
 
-  fs.writeFile(outputPath, contents.join('\n'), callback);
+  return contents.join('\n');
 }
 
 function getIcons(whitelist, callback) {
