@@ -85,5 +85,5 @@ function checkOutput(output, done) {
     } else {
       done(new Error('Contents don\'t match'));
     }
-  })
+  });
 }
