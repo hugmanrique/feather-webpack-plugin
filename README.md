@@ -9,6 +9,8 @@ Combine [Feather icons](https://feathericons.com/) into one using `<symbol>` ele
 
 Uses [svgstore](https://www.npmjs.com/package/svgstore) on the back to create the `<symbol>` element.
 
+This plugin is intended to be used with [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin), where the `template` is the output file this package produces.
+
 ## Install
 
 ```
