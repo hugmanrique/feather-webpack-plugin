@@ -9,6 +9,8 @@ Uses [svgstore](https://www.npmjs.com/package/svgstore) on the back to create th
 $ npm install --save feather-webpack-plugin
 ```
 
+## Usage
+
 webpack.config.js
 
 ```javascript
@@ -17,6 +19,9 @@ const FeatherPlugin = require('feather-webpack-plugin');
 module.exports = {
   plugins: {
     new FeatherPlugin({
+      template: 'template.ejs',
+      output: 'output.ejs',
+      line: 1,
       whitelist: [
         'home'
       ]
@@ -25,17 +30,28 @@ module.exports = {
 };
 ```
 
+template.ejs
+
+```html
+<a>Before</a>
+<b>After</b>
+```
+
 ## Note
 
-The template will only be generated on the first run. Additional webpack compilations (with the `--watch` flag) won't trigger the template creation script. This plugin is intended for production creation, and as the webpack config cannot be modified during runtime, there's no way for the plugin to get an options config change.
+The template will only be generated before Webpack runs (by using the `before-run` plugin callback). Additional webpack compilations (with the `--watch` flag) won't trigger the template creation script. This plugin is intended for templates ready for production, and as the Webpack config cannot be modified during runtime, there's no way for the plugin to check for config changes.
 
 ## Options
 
-All the options supported by svgstore are passed to the new instance. Take a look at their [docs](https://www.npmjs.com/package/svgstore#options).
+```javascript
+new FeatherPlugin(options: object)
+```
 
+| Name | Type | Description |
+|:---------------:|:-----------:|---------------------------------------------------------------------------------------|
+| **`template`** | `{String}` | The path where your template to be modified is stored. Relative to Webpack's context. |
+| **`output`** | `{String}` | The path where the generated template will be stored. Relative to Webpack's context. |
+| **`line`** | `{Integer}` | Line number where the SVG element is going to be inserted in the template file. |
+| **`whitelist`** | `{Array}` | Contains the names of Feather's icons you want to insert |
 
-
-/// REMOVE, make table
-/*Additionally, a `whitelist` and `blacklist` of icon names are supported. Please, only pass one of them, the other will be ignored.*/
-
-
+Additionally, all the options supported by svgstore are passed to the internal plugin instance. Take a look at their [docs](https://www.npmjs.com/package/svgstore#options).
