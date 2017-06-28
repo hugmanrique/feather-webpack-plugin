@@ -1,0 +1,36 @@
+{
+  "name": "feather-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Combine Feather icons into one using <symbol> elements",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hugmanrique/feather-webpack-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "feather",
+    "icons",
+    "svg",
+    "symbols",
+    "template"
+  ],
+  "author": {
+    "name": "Hugo Manrique",
+    "url": "https://hugmanrique.me",
+    "email": "npm@hugmanrique.me"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/hugmanrique/feather-webpack-plugin",
+  "scripts": {
+    "test": "mocha tests/"
+  },
+  "dependencies": {
+    "feather-icons": "^2.4.0",
+    "svgstore": "^2.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  }
+}
