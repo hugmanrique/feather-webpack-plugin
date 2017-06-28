@@ -6,6 +6,10 @@ const svgstore = require('svgstore');
 const iconDir = path.join(__dirname, 'node_modules/feather-icons/icons');
 
 function FeatherPlugin(options) {
+  if (!options) {
+    throw new Error('Some options are required');
+  }
+
   this.generator = svgstore({
     inline: true,
     copyAttrs: options.copyAttrs || [
@@ -91,3 +95,6 @@ function filterNames(whitelist, files) {
 function transform(svg) {
   return svg.replace(/ stroke="#000"/g, '');
 }
+
+FeatherPlugin['default'] = FeatherPlugin;
+module.exports = FeatherPlugin;
