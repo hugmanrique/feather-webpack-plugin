@@ -73,17 +73,20 @@ function getIcons(whitelist) {
   fs.readdirSync(iconDir).forEach(category => {
     const dir = path.join(iconDir, category);
 
-    const files = fs.readdirSync(dir);
+    const files = fs.readdirSync(dir)
+      .map(file => file.replace('.svg', ''));
+
     const names = filterNames(whitelist, files);
 
-    names.forEach(name => {
-      const svg = fs.readFileSync(path.join(dir, name), 'utf8');
+    names
+      .forEach(name => {
+        const svg = fs.readFileSync(path.join(dir, `${name}.svg`), 'utf8');
 
-      icons.push([
-        name,
-        transform(svg)
-      ]);
-    });
+        icons.push([
+          name,
+          transform(svg)
+        ]);
+      });
   });
 
   return icons;
@@ -91,9 +94,7 @@ function getIcons(whitelist) {
 
 function filterNames(whitelist, files) {
   return files.filter(file => {
-    const name = file.replace('.svg', '');
-
-    return whitelist.indexOf(name) !== -1;
+    return whitelist.indexOf(file) !== -1;
   });
 }
 
