@@ -55,3 +55,18 @@ new FeatherPlugin(options: object)
 | **`whitelist`** | `{Array}` | Contains the names of Feather's icons you want to insert |
 
 Additionally, all the options supported by svgstore are passed to the internal plugin instance. Take a look at their [docs](https://www.npmjs.com/package/svgstore#options).
+
+[npm]: https://img.shields.io/npm/v/feather-webpack-plugin.svg
+[npm-url]: https://npmjs.com/package/feather-webpack-plugin
+
+[node]: https://img.shields.io/node/v/feather-webpack-plugin.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://david-dm.org/hugmanrique/feather-webpack-plugin.svg
+[deps-url]: https://david-dm.org/hugmanrique/feather-webpack-plugin
+
+[tests]: http://img.shields.io/travis/hugmanrique/feather-webpack-plugin.svg
+[tests-url]: https://travis-ci.org/hugmanrique/feather-webpack-plugin
+
+[cover]: https://coveralls.io/repos/github/hugmanrique/feather-webpack-plugin/badge.svg
+[cover-url]: https://coveralls.io/github/hugmanrique/feather-webpack-plugin
