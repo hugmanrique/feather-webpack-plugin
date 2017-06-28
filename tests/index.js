@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const FeatherPlugin = require('../index.js');
 
 const HELPER_DIR = path.join(__dirname, 'helpers');
@@ -42,10 +43,35 @@ describe('create instance', function() {
 });
 
 describe('apply function', function() {
+  const outputPath = path.resolve(HELPER_DIR, 'output.ejs');
+
   it('generates file', function(done) {
     const compiler = new MockCompiler();
 
     instance.apply(compiler);
-    done();
+
+    fs.exists(outputPath, function(exists) {
+      if (exists) {
+        done();
+      } else {
+        done(new Error('Output file doesn\'t exist'));
+      }
+    });
+  });
+
+  it('creates valid content', function(done) {
+    fs.readFile(outputPath, function(err, data) {
+      if (err) {
+        return done(err);
+      }
+
+      console.log(data);
+
+      if (data === '<a>Before</a>\n<b>After</b>') {
+        done();
+      } else {
+        done(new Error('Contents don\'t match'));
+      }
+    });
   });
 });
