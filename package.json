@@ -1,6 +1,6 @@
 {
   "name": "feather-webpack-plugin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Combine Feather icons into one using <symbol> elements",
   "main": "index.js",
   "repository": {
